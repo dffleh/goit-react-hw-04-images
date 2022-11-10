@@ -56,8 +56,3 @@ export default class Searchbar extends Component {
     );
   }
 }
-
-Notiflix.Notify.init({
-  distance: '10px',
-  timeout: 2000,
-});
