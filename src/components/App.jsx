@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Wrap } from './App.styled';
 import Button from './Button/Buttons';
 import fetchImage from './Fetch/Fetch';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -48,14 +49,14 @@ export default class App extends Component {
   render() {
     const { images, status } = this.state;
     return (
-      <div>
+      <Wrap>
         <Searchbar onSubmit={this.formSubmit} />
         {images && <ImageGallery data={images} />}
         {status === 'pending' && <Loader />}
         {images.length >= 12 && status === 'resolved' && (
           <Button onClick={this.loadMore} />
         )}
-      </div>
+      </Wrap>
     );
   }
 }

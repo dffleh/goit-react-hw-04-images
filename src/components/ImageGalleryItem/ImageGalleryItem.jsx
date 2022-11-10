@@ -1,5 +1,6 @@
-import Modal from 'components/Modal/Modal';
 import { Component } from 'react';
+import Modal from 'components/Modal/Modal';
+import { GalleryItem, ItemImage } from './ImageGalleryItem.styled';
 
 export default class ImageGalleryItem extends Component {
   state = {
@@ -13,9 +14,9 @@ export default class ImageGalleryItem extends Component {
     const { webformatURL, largeImageURL, tags } = this.props;
     return (
       <>
-        <li onClick={this.toggleModal}>
-          <img src={webformatURL} alt={tags} />
-        </li>
+        <GalleryItem onClick={this.toggleModal}>
+          <ItemImage src={webformatURL} alt={tags} />
+        </GalleryItem>
         {this.state.showModal && (
           <Modal
             largeImageURL={largeImageURL}

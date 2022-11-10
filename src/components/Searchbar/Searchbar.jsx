@@ -1,5 +1,13 @@
 import { Component } from 'react';
 import Notiflix from 'notiflix';
+import {
+  SearchBar,
+  SearchButton,
+  SearchForm,
+  SearchFormInput,
+  SearchFormLabel,
+} from './Searchbar.styled';
+import { BiSearchAlt } from 'react-icons/bi';
 
 export default class Searchbar extends Component {
   state = {
@@ -27,22 +35,23 @@ export default class Searchbar extends Component {
   render() {
     return (
       <>
-        <header>
-          <form onSubmit={this.handleSubmit}>
-            <input
+        <SearchBar>
+          <SearchForm onSubmit={this.handleSubmit}>
+            <SearchButton type="submit">
+              <BiSearchAlt size={25} />
+              <SearchFormLabel>Search</SearchFormLabel>
+            </SearchButton>
+
+            <SearchFormInput
               value={this.state.inputValue}
               onChange={this.handleChange}
               type="text"
-              autocomplete="off"
+              autoComplete="off"
               autoFocus
               placeholder="Search images"
             />
-
-            <button type="submit">
-              <span>Search</span>
-            </button>
-          </form>
-        </header>
+          </SearchForm>
+        </SearchBar>
       </>
     );
   }

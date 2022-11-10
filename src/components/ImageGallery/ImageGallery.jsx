@@ -1,8 +1,9 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ImgGallery } from './ImageGallery.styled';
 
 export default function ImageGallery({ data }) {
   return (
-    <ul>
+    <ImgGallery>
       {data.map(item => (
         <ImageGalleryItem
           key={item.id}
@@ -11,6 +12,6 @@ export default function ImageGallery({ data }) {
           tags={item.tags}
         />
       ))}
-    </ul>
+    </ImgGallery>
   );
 }
