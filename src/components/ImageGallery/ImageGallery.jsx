@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
+
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ImgGallery } from './ImageGallery.styled';
-import PropTypes from 'prop-types';
 
 export default function ImageGallery({ data }) {
   return (

@@ -1,5 +1,6 @@
-import { LoadMoreBtn } from './Buttons.stuled';
 import PropTypes from 'prop-types';
+
+import { LoadMoreBtn } from './Buttons.stuled';
 
 function Button({ onClick }) {
   return (

@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import Notiflix from 'notiflix';
+
+import { BiSearchAlt } from 'react-icons/bi';
+
 import {
   SearchBar,
   SearchButton,
@@ -7,7 +10,6 @@ import {
   SearchFormInput,
   SearchFormLabel,
 } from './Searchbar.styled';
-import { BiSearchAlt } from 'react-icons/bi';
 
 export default class Searchbar extends Component {
   state = {

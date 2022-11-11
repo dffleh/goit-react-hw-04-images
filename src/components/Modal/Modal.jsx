@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
-import { Backdrop, ModalImg } from './Modal.styled';
+
 import PropTypes from 'prop-types';
+
+import { Backdrop, ModalImg } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
 
