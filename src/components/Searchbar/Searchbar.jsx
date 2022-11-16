@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import Notiflix from 'notiflix';
 
 import { BiSearchAlt } from 'react-icons/bi';
@@ -11,50 +11,48 @@ import {
   SearchFormLabel,
 } from './Searchbar.styled';
 
-export default class Searchbar extends Component {
-  state = {
-    inputValue: '',
+const Searchbar = ({ onSubmit }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = e => {
+    setInputValue(e.currentTarget.value.toLowerCase());
   };
 
-  handleChange = e => {
-    this.setState({ inputValue: e.currentTarget.value.toLowerCase() });
-  };
-
-  handleSubmit = e => {
-    const { inputValue } = this.state;
-
+  const handleSubmit = e => {
     e.preventDefault();
 
     if (inputValue.trim() === '') {
-      Notiflix.Notify.failure(`No request, try to write something realties =)`);
+      Notiflix.Notify.failure(
+        `No name - no images. Please, input your request!`
+      );
       return;
     }
 
-    this.props.onSubmit(inputValue);
-    this.setState({ inputValue: '' });
+    onSubmit(inputValue);
+    setInputValue('');
   };
 
-  render() {
-    return (
-      <>
-        <SearchBar>
-          <SearchForm onSubmit={this.handleSubmit}>
-            <SearchButton type="submit">
-              <BiSearchAlt size={25} />
-              <SearchFormLabel>Search</SearchFormLabel>
-            </SearchButton>
+  return (
+    <>
+      <SearchBar>
+        <SearchForm onSubmit={handleSubmit}>
+          <SearchButton type="submit">
+            <BiSearchAlt size={25} />
+            <SearchFormLabel>Search</SearchFormLabel>
+          </SearchButton>
 
-            <SearchFormInput
-              value={this.state.inputValue}
-              onChange={this.handleChange}
-              type="text"
-              autoComplete="off"
-              autoFocus
-              placeholder="Search images"
-            />
-          </SearchForm>
-        </SearchBar>
-      </>
-    );
-  }
-}
+          <SearchFormInput
+            value={inputValue}
+            onChange={handleChange}
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images"
+          />
+        </SearchForm>
+      </SearchBar>
+    </>
+  );
+};
+
+export default Searchbar;

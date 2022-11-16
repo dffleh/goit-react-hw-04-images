@@ -1,60 +1,55 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import Button from '../Button/Buttons';
 import fetchImage from '../Fetch/Fetch';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import Loader from '../Loader/Loader';
-import Searchbar from '../Searchbar/Searchbar';
-
+import Searchbar from 'components/Searchbar/Searchbar';
 import { Wrap } from './App.styled';
 
-export default class App extends Component {
-  state = {
-    inputValue: '',
-    page: 1,
-    status: 'idle',
-    images: [],
-    error: null,
-  };
+const App = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [page, setPage] = useState(1);
+  const [status, setStatus] = useState('idle');
+  const [images, setImages] = useState([]);
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const { inputValue, page } = this.state;
-    if (prevState.inputValue !== inputValue || prevState.page !== page) {
-      this.setState({ status: 'pending' });
+  useEffect(() => {
+    if (inputValue && page) {
+      setStatus('pending');
 
       fetchImage(inputValue, page)
         .then(resp => {
           const images = resp.hits;
-          this.setState(prevState => ({
-            images: [...prevState.images, ...images],
-            status: 'resolved',
-          }));
+          setImages(prevState => [...prevState, ...images]);
+          setStatus('resolved');
         })
         .catch(error => {
-          this.setState({ error, status: 'rejected' });
+          console.log(error);
+          setStatus('rejected');
         });
     }
+  }, [inputValue, page]);
+
+  const formSubmit = inputValue => {
+    setInputValue(inputValue);
+    setImages([]);
+    setPage(1);
   };
 
-  formSubmit = inputValue => {
-    this.setState({ inputValue: inputValue, images: [], page: 1 });
+  const loadMore = () => {
+    setPage(prevState => prevState + 1);
   };
 
-  loadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
-  };
+  return (
+    <Wrap>
+      <Searchbar onSubmit={formSubmit} />
+      {images && <ImageGallery data={images} />}
+      {status === 'pending' && <Loader />}
+      {images.length >= 12 && status === 'resolved' && (
+        <Button onClick={loadMore} />
+      )}
+    </Wrap>
+  );
+};
 
-  render() {
-    const { images, status } = this.state;
-    return (
-      <Wrap>
-        <Searchbar onSubmit={this.formSubmit} />
-        {images && <ImageGallery data={images} />}
-        {status === 'pending' && <Loader />}
-        {images.length >= 12 && status === 'resolved' && (
-          <Button onClick={this.loadMore} />
-        )}
-      </Wrap>
-    );
-  }
-}
+export default App;
